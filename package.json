@@ -6,7 +6,6 @@
   "main": "bin/www.js",
   "scripts": {
     "start": "nodemon ./bin/www",
-    
     "build-db": "sudo docker build -t zombies-db .",
     "start-db": "sudo docker run -d -p 3306:3306 zombies-db > .zombies-db-cid",
     "stop-db": "sudo docker stop `cat .zombies-db-cid`"

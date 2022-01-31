@@ -20,15 +20,19 @@ import index from './routes/index.js'
 import people from './routes/people.js'
 import zombies from './routes/zombies.js'
 
-
+import { fileURLToPath } from 'url';
 
 const app = express()
 const __dirname = new URL('.', import.meta.url).pathname
-
+const __filename = fileURLToPath(import.meta.url);
 // configura a pasta que contém as views e o handlebars como templating engine
-app.set('views', `${__dirname}/views`)
+console.log(`${__dirname}/views`)
+console.log(path.join(path.parse(path.dirname(__filename)).dir,''))
+app.set('views', path.join(path.parse(path.dirname(__filename)).dir,'/cefet-web-zombie-garden/views'))
+//app.set('views', `${__dirname}/views`)
 app.set('view engine', 'hbs')
-hbs.registerPartials(`${__dirname}/views/partials`, console.error)
+//hbs.registerPartials(`${__dirname}/views/partials`, console.error)
+hbs.registerPartials(path.join(path.parse(path.dirname(__filename)).dir,'/cefet-web-zombie-garden/views/partials'), console.error)
 app.set('json spaces', 2);
 
 // possibilita enviar um DELETE via formulário,
@@ -45,8 +49,8 @@ app.use(session({                                         // necessário para fl
   saveUninitialized: true
 }))
 app.use(flash())                                          // necessário para msgs efêmeras
-app.use(express.static(path.join(__dirname, 'public')))   // serve arquivos estáticos
-
+//app.use(express.static(path.join(__dirname, 'public')))   // serve arquivos estáticos
+app.use(express.static(path.join(path.parse(path.dirname(__filename)).dir, '/cefet-web-zombie-garden/public')))
 
 // configura as rotas "de cada entidade" da aplicação (separadinho, organizado)
 app.use('/', index)
