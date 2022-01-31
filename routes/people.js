@@ -23,10 +23,22 @@ router.get("/", async (req, res, next) => {
     //   - por exemplo, assim que uma pessoa é excluída, uma mensagem de
     //     sucesso pode ser mostrada
     // - error: idem para mensagem de erro
-    res.render("list-people", {
-      people,
-      success: req.flash("success"),
-      error: req.flash("error"),
+    // negociação de conteúdo
+    res.format({
+      html: () => {
+        res.render("list-people", {
+          people,
+          success: req.flash("success"),
+          error: req.flash("error"),
+        });
+      },
+      json: () => {
+        res.json({
+          people,
+          success: req.flash("success"),
+          error: req.flash("error"),
+        });
+      },
     });
   } catch (error) {
     console.error(error);
